@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios"
+import toast from "react-hot-toast"
 
 function AddCustomer() {
 
@@ -17,10 +18,17 @@ function AddCustomer() {
 
     try {
 
-      const response = await axios.post(
-        "http://localhost:5000/api/customer/create",
-        customer
-      )
+      const token = localStorage.getItem("token")
+
+const response = await axios.post(
+  "http://localhost:5000/api/customer/create",
+  customer,
+  {
+    headers: {
+      authorization: token
+    }
+  }
+)
 
       console.log(response.data)
 

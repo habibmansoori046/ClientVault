@@ -1,10 +1,11 @@
+require("dotenv").config()
 const authRoutes = require("./routes/authRoutes")
 const remarkRoutes = require("./routes/remarkRoutes")
 const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 
-require("dotenv").config()
+
 
 const customerRoutes = require("./routes/customerRoutes")
 
@@ -17,7 +18,7 @@ app.use(express.json())
 app.use("/api/customer", customerRoutes)
 app.use("/api/auth", authRoutes)
 app.use("/api/remark", remarkRoutes)
-
+console.log(process.env.MONGO_URI)
 mongoose.connect(process.env.MONGO_URI)
 
 .then(() => {

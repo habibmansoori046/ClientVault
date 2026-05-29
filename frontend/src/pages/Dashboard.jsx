@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react"
-
 import axios from "axios"
-
 import Sidebar from "../components/Sidebar"
 
 function Dashboard() {
@@ -22,10 +20,17 @@ function Dashboard() {
 
     try {
 
+      const token = localStorage.getItem("token")
+
       // ACTIVE CUSTOMERS
 
       const customersResponse = await axios.get(
-        "http://localhost:5000/api/customer/all"
+        "http://localhost:5000/api/customer/all",
+        {
+          headers: {
+            authorization: token
+          }
+        }
       )
 
       setTotalCustomers(
@@ -35,7 +40,12 @@ function Dashboard() {
       // DELETED CUSTOMERS
 
       const deletedResponse = await axios.get(
-        "http://localhost:5000/api/customer/deleted/all"
+        "http://localhost:5000/api/customer/deleted/all",
+        {
+          headers: {
+            authorization: token
+          }
+        }
       )
 
       setDeletedCustomers(
@@ -49,7 +59,12 @@ function Dashboard() {
       for (const customer of customersResponse.data) {
 
         const remarksResponse = await axios.get(
-          `http://localhost:5000/api/remark/${customer._id}`
+          `http://localhost:5000/api/remark/${customer._id}`,
+          {
+            headers: {
+              authorization: token
+            }
+          }
         )
 
         remarksCount += remarksResponse.data.length
@@ -78,11 +93,7 @@ function Dashboard() {
           Dashboard
         </h1>
 
-        {/* Cards */}
-
-        <div className="grid grid-cols-3 gap-8">
-
-          {/* Total Customers */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
           <div className="bg-blue-600 p-8 rounded-2xl shadow-lg">
 
@@ -96,8 +107,6 @@ function Dashboard() {
 
           </div>
 
-          {/* Deleted Customers */}
-
           <div className="bg-red-600 p-8 rounded-2xl shadow-lg">
 
             <h2 className="text-2xl font-bold mb-4">
@@ -109,8 +118,6 @@ function Dashboard() {
             </p>
 
           </div>
-
-          {/* Total Remarks */}
 
           <div className="bg-green-600 p-8 rounded-2xl shadow-lg">
 
@@ -131,6 +138,7 @@ function Dashboard() {
     </div>
 
   )
+
 }
 
 export default Dashboard

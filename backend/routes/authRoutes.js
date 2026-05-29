@@ -17,6 +17,8 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body
 
     const admin = await Admin.findOne({ username })
+    console.log("USERNAME:", username)
+    console.log("ADMIN FOUND:", admin)
 
     if (!admin) {
 
@@ -38,6 +40,11 @@ router.post("/login", async (req, res) => {
       })
 
     }
+    console.log("Entered Password:", password)
+
+    console.log("Hash Password:", admin.password)
+
+    console.log("Password Match:", isMatch)
 
     const token = jwt.sign(
 

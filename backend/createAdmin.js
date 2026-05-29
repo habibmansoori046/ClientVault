@@ -8,25 +8,49 @@ const Admin = require("./models/Admin")
 
 mongoose.connect(process.env.MONGO_URI)
 
-const createAdmin = async () => {
+mongoose.connection.once("open", async () => {
 
-  const hashedPassword = await bcrypt.hash(
-    "admin123",
-    10
-  )
+  try {
 
-  await Admin.create({
+    console.log("MongoDB Connected")
 
-    username: "admin",
+    const existingAdmin =
+      await Admin.findOne({
+        username: "admin"
+      })
 
-    password: hashedPassword
+    if (existingAdmin) {
 
-  })
+      console.log("Admin Already Exists")
 
-  console.log("Admin Created")
+      process.exit()
 
-  process.exit()
+    }
 
-}
+    const hashedPassword =
+      await bcrypt.hash(
+        "admin123",
+        10
+      )
 
-createAdmin()
+    await Admin.create({
+
+      username: "admin",
+
+      password: hashedPassword
+
+    })
+
+    console.log("Admin Created Successfully")
+
+    process.exit()
+
+  } catch (error) {
+
+    console.log(error)
+
+    process.exit()
+
+  }
+
+})

@@ -7,7 +7,7 @@ const Customer = require("../models/Customer")
 
 // CREATE CUSTOMER
 
-router.post("/create", authMiddleware,, async (req, res) => {
+router.post("/create", authMiddleware, async (req, res) => {
 
   try {
 

@@ -25,21 +25,28 @@ function Customers() {
 
   const fetchCustomers = async () => {
 
-    try {
+  try {
 
-      const response = await axios.get(
-        "http://localhost:5000/api/customer/all"
-      )
+    const token = localStorage.getItem("token")
 
-      setCustomers(response.data)
+    const response = await axios.get(
+      "http://localhost:5000/api/customer/all",
+      {
+        headers: {
+          authorization: token
+        }
+      }
+    )
 
-    } catch (error) {
+    setCustomers(response.data)
 
-      console.log(error)
+  } catch (error) {
 
-    }
+    console.log(error)
 
   }
+
+}
 
   const filteredCustomers = customers.filter((customer) =>
 
