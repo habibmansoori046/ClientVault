@@ -5,15 +5,11 @@ import Sidebar from "../components/Sidebar"
 function Dashboard() {
 
   const [totalCustomers, setTotalCustomers] = useState(0)
-
   const [deletedCustomers, setDeletedCustomers] = useState(0)
-
   const [totalRemarks, setTotalRemarks] = useState(0)
 
   useEffect(() => {
-
     fetchDashboardData()
-
   }, [])
 
   const fetchDashboardData = async () => {
@@ -22,10 +18,8 @@ function Dashboard() {
 
       const token = localStorage.getItem("token")
 
-      // ACTIVE CUSTOMERS
-
       const customersResponse = await axios.get(
-        "http://localhost:5000/api/customer/all",
+        "https://clientvault-backend.onrender.com/api/customer/all",
         {
           headers: {
             authorization: token
@@ -33,14 +27,10 @@ function Dashboard() {
         }
       )
 
-      setTotalCustomers(
-        customersResponse.data.length
-      )
-
-      // DELETED CUSTOMERS
+      setTotalCustomers(customersResponse.data.length)
 
       const deletedResponse = await axios.get(
-        "http://localhost:5000/api/customer/deleted/all",
+        "https://clientvault-backend.onrender.com/api/customer/deleted/all",
         {
           headers: {
             authorization: token
@@ -48,18 +38,14 @@ function Dashboard() {
         }
       )
 
-      setDeletedCustomers(
-        deletedResponse.data.length
-      )
-
-      // REMARKS
+      setDeletedCustomers(deletedResponse.data.length)
 
       let remarksCount = 0
 
       for (const customer of customersResponse.data) {
 
         const remarksResponse = await axios.get(
-          `http://localhost:5000/api/remark/${customer._id}`,
+          `https://clientvault-backend.onrender.com/api/remark/${customer._id}`,
           {
             headers: {
               authorization: token
@@ -96,39 +82,30 @@ function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
           <div className="bg-blue-600 p-8 rounded-2xl shadow-lg">
-
             <h2 className="text-2xl font-bold mb-4">
               Total Customers
             </h2>
-
             <p className="text-5xl font-bold">
               {totalCustomers}
             </p>
-
           </div>
 
           <div className="bg-red-600 p-8 rounded-2xl shadow-lg">
-
             <h2 className="text-2xl font-bold mb-4">
               Deleted Customers
             </h2>
-
             <p className="text-5xl font-bold">
               {deletedCustomers}
             </p>
-
           </div>
 
           <div className="bg-green-600 p-8 rounded-2xl shadow-lg">
-
             <h2 className="text-2xl font-bold mb-4">
               Total Remarks
             </h2>
-
             <p className="text-5xl font-bold">
               {totalRemarks}
             </p>
-
           </div>
 
         </div>

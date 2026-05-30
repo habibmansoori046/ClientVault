@@ -33,7 +33,7 @@ function CustomerDetails() {
     try {
 
       const response = await axios.get(
-        `http://localhost:5000/api/customer/${id}`
+        `https://clientvault-backend.onrender.com/api/customer/${id}`
       )
 
       setCustomer(response.data)
@@ -55,7 +55,7 @@ function CustomerDetails() {
     try {
 
       const response = await axios.get(
-        `http://localhost:5000/api/remark/${id}`
+        `https://clientvault-backend.onrender.com/api/remark/${id}`
       )
 
       setRemarks(response.data)
@@ -75,7 +75,7 @@ function CustomerDetails() {
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/remark/add",
+        "https://clientvault-backend.onrender.com/api/remark/add",
         {
           customerId: id,
           text: remark
@@ -101,7 +101,7 @@ function CustomerDetails() {
     try {
 
       const response = await axios.put(
-        `http://localhost:5000/api/customer/update/${id}`,
+        `https://clientvault-backend.onrender.com/api/customer/update/${id}`,
         {
           phone: editPhone,
           password: editPassword
@@ -135,7 +135,7 @@ function CustomerDetails() {
   try {
 
     await axios.put(
-      `http://localhost:5000/api/customer/delete/${id}`
+      `https://clientvault-backend.onrender.com/api/customer/delete/${id}`
     )
 
     alert("Customer moved to recycle bin")

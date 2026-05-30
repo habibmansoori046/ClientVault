@@ -21,7 +21,7 @@ function RecycleBin() {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/customer/deleted/all"
+        "https://clientvault-backend.onrender.com/api/customer/deleted/all"
       )
 
       setCustomers(response.data)
@@ -39,7 +39,7 @@ function RecycleBin() {
     try {
 
       await axios.put(
-        `http://localhost:5000/api/customer/restore/${id}`
+        `https://clientvault-backend.onrender.com/api/customer/restore/${id}`
       )
 
       fetchDeletedCustomers()
@@ -65,7 +65,7 @@ function RecycleBin() {
     try {
 
       await axios.delete(
-        `http://localhost:5000/api/customer/permanent/${id}`
+        `https://clientvault-backend.onrender.com/api/customer/permanent/${id}`
       )
 
       fetchDeletedCustomers()

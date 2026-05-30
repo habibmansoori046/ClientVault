@@ -30,7 +30,7 @@ function Customers() {
     const token = localStorage.getItem("token")
 
     const response = await axios.get(
-      "http://localhost:5000/api/customer/all",
+      "https://clientvault-backend.onrender.com/api/customer/all",
       {
         headers: {
           authorization: token
@@ -75,7 +75,7 @@ function Customers() {
           // FETCH REMARKS
 
           const remarksResponse = await axios.get(
-            `http://localhost:5000/api/remark/${customer._id}`
+            `https://clientvault-backend.onrender.com/api/remark/${customer._id}`
           )
 
           const remarks = remarksResponse.data
