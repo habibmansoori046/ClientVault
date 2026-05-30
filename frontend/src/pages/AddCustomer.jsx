@@ -20,27 +20,44 @@ function AddCustomer() {
 
       const token = localStorage.getItem("token")
 
-await axios.post(
-  "https://clientvault-backend.onrender.com/api/customer/create",
-  customer,
-  {
-    headers: {
-      authorization: token
-    }
-  }
-)
+      const response = await axios.post(
+        "https://clientvault-backend.onrender.com/api/customer/create",
+        customer,
+        {
+          headers: {
+            authorization: token
+          }
+        }
+      )
 
       console.log(response.data)
 
       toast.success("Customer Saved Successfully")
 
-      navigate("/customers")
+      setCustomer({
+        name: "",
+        uin: "",
+        password: "",
+        phone: ""
+      })
+
+      setTimeout(() => {
+        navigate("/customers")
+      }, 1000)
 
     } catch (error) {
 
-      console.log(error)
+      console.log("ERROR:", error)
 
-      alert("Error Saving Customer")
+      console.log(
+        "SERVER RESPONSE:",
+        error.response?.data
+      )
+
+      toast.error(
+        error.response?.data?.message ||
+        "Error Saving Customer"
+      )
 
     }
 
@@ -50,12 +67,8 @@ await axios.post(
 
     <div className="min-h-screen bg-gray-900 text-white p-10">
 
-      {/* Back Button */}
-
       <button
-
         onClick={() => navigate(-1)}
-
         className="bg-gray-700 hover:bg-gray-600 px-5 py-2 rounded-lg mb-6"
       >
         ← Back
@@ -67,8 +80,6 @@ await axios.post(
 
       <div className="bg-gray-800 p-8 rounded-2xl max-w-2xl">
 
-        {/* Name */}
-
         <div className="mb-5">
 
           <label className="block mb-2">
@@ -78,11 +89,8 @@ await axios.post(
           <input
             type="text"
             placeholder="Enter customer name"
-
             className="w-full p-3 rounded-lg bg-gray-700 outline-none"
-
             value={customer.name}
-
             onChange={(e) =>
               setCustomer({
                 ...customer,
@@ -93,8 +101,6 @@ await axios.post(
 
         </div>
 
-        {/* UIN */}
-
         <div className="mb-5">
 
           <label className="block mb-2">
@@ -104,11 +110,8 @@ await axios.post(
           <input
             type="text"
             placeholder="Enter UIN number"
-
             className="w-full p-3 rounded-lg bg-gray-700 outline-none"
-
             value={customer.uin}
-
             onChange={(e) =>
               setCustomer({
                 ...customer,
@@ -119,8 +122,6 @@ await axios.post(
 
         </div>
 
-        {/* Password */}
-
         <div className="mb-5">
 
           <label className="block mb-2">
@@ -130,11 +131,8 @@ await axios.post(
           <input
             type="text"
             placeholder="Enter password"
-
             className="w-full p-3 rounded-lg bg-gray-700 outline-none"
-
             value={customer.password}
-
             onChange={(e) =>
               setCustomer({
                 ...customer,
@@ -145,8 +143,6 @@ await axios.post(
 
         </div>
 
-        {/* Phone */}
-
         <div className="mb-8">
 
           <label className="block mb-2">
@@ -156,11 +152,8 @@ await axios.post(
           <input
             type="text"
             placeholder="Enter phone number"
-
             className="w-full p-3 rounded-lg bg-gray-700 outline-none"
-
             value={customer.phone}
-
             onChange={(e) =>
               setCustomer({
                 ...customer,
@@ -171,12 +164,8 @@ await axios.post(
 
         </div>
 
-        {/* Save Button */}
-
         <button
-
           onClick={saveCustomer}
-
           className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold"
         >
           Save Customer
