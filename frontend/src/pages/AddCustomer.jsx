@@ -20,8 +20,8 @@ function AddCustomer() {
 
       const token = localStorage.getItem("token")
 
-const response = await axios.post(
-  "http://localhost:5000/api/customer/create",
+await axios.post(
+  "https://clientvault-backend.onrender.com/api/customer/create",
   customer,
   {
     headers: {
