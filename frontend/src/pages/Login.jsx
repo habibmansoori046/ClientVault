@@ -1,7 +1,5 @@
 import { useState } from "react"
-
 import axios from "axios"
-
 import { useNavigate } from "react-router-dom"
 
 function Login() {
@@ -9,7 +7,6 @@ function Login() {
   const navigate = useNavigate()
 
   const [username, setUsername] = useState("")
-
   const [password, setPassword] = useState("")
 
   const loginAdmin = async () => {
@@ -17,12 +14,12 @@ function Login() {
     try {
 
       const response = await axios.post(
-  "https://clientvault-backend.onrender.com/api/auth/login",
-  {
-    username,
-    password
-  }
-)
+        "https://clientvault-backend.onrender.com/api/auth/login",
+        {
+          username: username.trim(),
+          password: password.trim()
+        }
+      )
 
       localStorage.setItem(
         "token",
@@ -35,9 +32,18 @@ function Login() {
 
     } catch (error) {
 
-      console.log(error)
+      console.log("FULL ERROR:", error)
 
-      alert("Invalid Credentials")
+      console.log(
+        "SERVER RESPONSE:",
+        error.response?.data
+      )
+
+      alert(
+        JSON.stringify(
+          error.response?.data || error.message
+        )
+      )
 
     }
 
@@ -56,11 +62,8 @@ function Login() {
         <input
           type="text"
           placeholder="Admin ID"
-
           className="w-full p-3 rounded-lg mb-4 bg-gray-700 text-white outline-none"
-
           value={username}
-
           onChange={(e) =>
             setUsername(e.target.value)
           }
@@ -69,20 +72,15 @@ function Login() {
         <input
           type="password"
           placeholder="Password"
-
           className="w-full p-3 rounded-lg mb-6 bg-gray-700 text-white outline-none"
-
           value={password}
-
           onChange={(e) =>
             setPassword(e.target.value)
           }
         />
 
         <button
-
           onClick={loginAdmin}
-
           className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold"
         >
           Login
@@ -91,6 +89,7 @@ function Login() {
       </div>
 
     </div>
+
   )
 }
 
